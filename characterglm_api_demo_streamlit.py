@@ -110,7 +110,7 @@ def draw_new_image():
         return
     
     # TODO: 加上风格选项
-    image_prompt = '二次元风格。' + image_prompt.strip()
+    image_prompt = st.session_state["style_options"] + '风格。' + image_prompt.strip()
     
     print(f"image_prompt = {image_prompt}")
     n_retry = 3
@@ -137,6 +137,7 @@ def draw_new_image():
 
 button_labels = {
     "clear_meta": "清空人设",
+    "style_options": "风格",
     "clear_history": "清空对话历史",
     "gen_picture": "生成图片"
 }
@@ -163,6 +164,10 @@ with st.container():
                 "user_name": ""
             }
             st.rerun()
+
+    with button_key_to_col["style_options"]:
+        style_options = st.sidebar.selectbox(button_labels["style_options"], ["国漫", "港漫", "水墨画", "宫崎骏", "二次元风格"], index=0, key="style_options")
+
 
     with button_key_to_col["clear_history"]:
         clear_history = st.button(button_labels["clear_history"], key="clear_history")
